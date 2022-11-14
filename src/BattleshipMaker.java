@@ -11,12 +11,9 @@ public class BattleshipMaker {
 
     // Constructors
     /*
-    create a random set of valid coordinates
+    test constructor to access methods
      */
-    public BattleshipMaker()
-    {
-
-    }
+    public BattleshipMaker(){}
 
     /*
     creation of an object of this class that assigns the ship coordinates
@@ -237,7 +234,7 @@ public class BattleshipMaker {
         randomBoard = addRandomShip(randomBoard,2);
 
 
-        return carrierC + "\n" + randomBoard;
+        return randomBoard;
     }
 
     public String addRandomShip(String baseBoard, int shipLength)
@@ -269,7 +266,6 @@ public class BattleshipMaker {
                     {
                         checked = true;
                         baseBoard = addShip(baseBoard, coord, shipLength, direction);
-                        carrierC += coord + " " + direction + ", ";
                     }
                 }
             }
@@ -278,13 +274,57 @@ public class BattleshipMaker {
     }
 
     /*
+    places a marker "x" on the provided board if the existing area is "+" (miss)
+    places a marker "#" on the provided board if the existing area is "o" (hit)
+    returns a statement saying that the area has already been shot if above markers are already present
+     */
 
     public String takeShot(String baseBoard, String coord)
     {
+        String updateBoard = "";
+        int behind = baseBoard.indexOf(coord.substring(1)) + 1 + (letters.indexOf(coord.substring(0,1)) + 1) * 2;
+        String target = baseBoard.substring(behind, behind + 1);
 
+        if (target.equals("+"))
+        {
+            updateBoard = baseBoard.substring(0,behind) + "x" + baseBoard.substring(behind + 1);
+        }
+        else if (target.equals("o"))
+        {
+            updateBoard = baseBoard.substring(0,behind) + "#" + baseBoard.substring(behind + 1);
+        }
+        else
+        {
+            return "A shot has already been taken at " + coord + ". Please take another shot.";
+        }
+        return updateBoard;
     }
 
+    /*
+    returns "hit" or "miss" depending on the substring at the target index
      */
+    public String checkHit(String baseBoard, String coord)
+    {
+        String result = "";
+        int behind = baseBoard.indexOf(coord.substring(1)) + 1 + (letters.indexOf(coord.substring(0,1)) + 1) * 2;
+        String target = baseBoard.substring(behind, behind + 1);
+
+        if (target.equals("+"))
+        {
+            result = "miss";
+            return result;
+        }
+        else if (target.equals("o"))
+        {
+            result = "hit";
+            return result;
+        }
+        else
+        {
+            result = "space";
+            return result;
+        }
+    }
 
 
 }

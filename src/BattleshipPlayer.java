@@ -265,29 +265,20 @@ public class BattleshipPlayer {
         String opponentBoard = opponent.randomBoard();
         System.out.println(opponentBoard);
 
-        /*
-        String emptyBoard = test.makeEmptyBoard();
+        System.out.print("Your turn - Take your shot: ");
+        input = s.nextLine();
+        while (opponent.takeShot(opponentBoard,input).equals("A shot has already been taken at " + input + ". Please take another shot."))
+        {
+            if (opponent.takeShot(opponentBoard,input).equals("A shot has already been taken at " + input + ". Please take another shot."))
+            {
+                System.out.print(opponent.takeShot(opponentBoard,input) + "\nTake another shot: ");
+                input = s.nextLine();
+            }
+        }
 
-        emptyBoard = test.addShip(emptyBoard,5,opponentBoard.substring(0,opponentBoard.indexOf(" ")),opponentBoard.substring(opponentBoard.indexOf(" ") + 1, opponentBoard.indexOf(",")));
-        System.out.println(test.addShip(emptyBoard,5,opponentBoard.substring(0,opponentBoard.indexOf(" ")),opponentBoard.substring(opponentBoard.indexOf(" ") + 1, opponentBoard.indexOf(","))));
-        opponentBoard = opponentBoard.substring(opponentBoard.indexOf(", ") + 2);
-
-        emptyBoard = test.addShip(emptyBoard,4,opponentBoard.substring(0,opponentBoard.indexOf(" ")),opponentBoard.substring(opponentBoard.indexOf(" ") + 1, opponentBoard.indexOf(",")));
-        System.out.println(test.addShip(emptyBoard,4,opponentBoard.substring(0,opponentBoard.indexOf(" ")),opponentBoard.substring(opponentBoard.indexOf(" ") + 1, opponentBoard.indexOf(","))));
-        opponentBoard = opponentBoard.substring(opponentBoard.indexOf(", ") + 2);
-
-        emptyBoard = test.addShip(emptyBoard,3,opponentBoard.substring(0,opponentBoard.indexOf(" ")),opponentBoard.substring(opponentBoard.indexOf(" ") + 1, opponentBoard.indexOf(",")));
-        System.out.println(test.addShip(emptyBoard,3,opponentBoard.substring(0,opponentBoard.indexOf(" ")),opponentBoard.substring(opponentBoard.indexOf(" ") + 1, opponentBoard.indexOf(","))));
-        opponentBoard = opponentBoard.substring(opponentBoard.indexOf(", ") + 2);
-
-        emptyBoard = test.addShip(emptyBoard,3,opponentBoard.substring(0,opponentBoard.indexOf(" ")),opponentBoard.substring(opponentBoard.indexOf(" ") + 1, opponentBoard.indexOf(",")));
-        System.out.println(test.addShip(emptyBoard,3,opponentBoard.substring(0,opponentBoard.indexOf(" ")),opponentBoard.substring(opponentBoard.indexOf(" ") + 1, opponentBoard.indexOf(","))));
-        opponentBoard = opponentBoard.substring(opponentBoard.indexOf(", ") + 2);
-
-        emptyBoard = test.addShip(emptyBoard,2,opponentBoard.substring(0,opponentBoard.indexOf(" ")),opponentBoard.substring(opponentBoard.indexOf(" ") + 1, opponentBoard.indexOf(",")));
-        System.out.println(test.addShip(emptyBoard,2,opponentBoard.substring(0,opponentBoard.indexOf(" ")),opponentBoard.substring(opponentBoard.indexOf(" ") + 1, opponentBoard.indexOf(","))));
-
-
-         */
+        String originalBoard = opponentBoard;
+        opponentBoard = opponent.takeShot(originalBoard,input);
+        System.out.println("\n" + opponentBoard);
+        System.out.println("Your shot at " + input + " was a " + opponent.checkHit(originalBoard,input) + "!");
     }
 }
