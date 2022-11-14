@@ -326,5 +326,9 @@ public class BattleshipMaker {
         }
     }
 
+    public boolean checkShipStatus(int shipLength, String coord, String direction)
+    {
+
+    }
 
 }
