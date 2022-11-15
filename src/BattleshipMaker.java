@@ -83,11 +83,11 @@ public class BattleshipMaker {
         String updateBoard = "";
 
         // initialize an empty board and add to it ship by ship
-        updateBoard = addShip(emptyBoard,carrier,5,directCarrier);
-        updateBoard = addShip(updateBoard,battleship,4,directBattle);
-        updateBoard = addShip(updateBoard,cruiser,3,directCruiser);
-        updateBoard = addShip(updateBoard,submarine,3,directSub);
-        updateBoard = addShip(updateBoard,destroyer,2,directDestroy);
+        updateBoard = addShip(emptyBoard,5,carrier,directCarrier);
+        updateBoard = addShip(updateBoard,4,battleship,directBattle);
+        updateBoard = addShip(updateBoard,3,cruiser,directCruiser);
+        updateBoard = addShip(updateBoard,3,submarine,directSub);
+        updateBoard = addShip(updateBoard,2,destroyer,directDestroy);
 
         return updateBoard;
     }
@@ -99,7 +99,7 @@ public class BattleshipMaker {
     take the first half of the board String, add the ship,
     then add the rest of the board
      */
-    public String addShip(String baseBoard, String coord, int shipLength, String direction)
+    public String addShip(String baseBoard, int shipLength, String coord, String direction)
     {
         // find the index of the row, and add to the index up until the coordinate (behind)
         String updateBoard = baseBoard;
@@ -189,7 +189,7 @@ public class BattleshipMaker {
     checks if the ship coordinates overlap
     uses the baseboard and checks if each space the ship is to be placed already has a "o" positioned
      */
-    public boolean overlapChecker(String baseBoard, String coord, int shipLength, String direction)
+    public boolean overlapChecker(String baseBoard, int shipLength, String coord, String direction)
     {
         int row = baseBoard.indexOf(coord.substring(1));
         // multiply by two to account for spaces, add 1 to make index a count (ABCDE = 12345)
@@ -262,10 +262,10 @@ public class BattleshipMaker {
             {
                 if (limitChecker(shipLength, coord, direction))
                 {
-                    if (overlapChecker(baseBoard,coord,shipLength,direction))
+                    if (overlapChecker(baseBoard,shipLength,coord,direction))
                     {
                         checked = true;
-                        baseBoard = addShip(baseBoard, coord, shipLength, direction);
+                        baseBoard = addShip(baseBoard, shipLength, coord, direction);
                     }
                 }
             }
@@ -326,7 +326,7 @@ public class BattleshipMaker {
         }
     }
 
-    public boolean checkShipStatus(int shipLength, String coord, String direction)
+    public boolean checkShipStatus(String checkBoard, int shipLength, String coord, String direction)
     {
 
     }
