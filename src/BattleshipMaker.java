@@ -414,7 +414,7 @@ public class BattleshipMaker {
     {
         String shipStatus = "";
         // gets to the index behind the coordinate
-        int behind = baseBoard.indexOf(coord.substring(1)) + 2 + (letters.indexOf(coord.substring(0,1)) + 1) * 2;
+        int behind = baseBoard.indexOf(coord.substring(1)) + 1 + (letters.indexOf(coord.substring(0,1)) + 1) * 2;
 
         if (direction.equals("right"))
         {
