@@ -1,17 +1,22 @@
 public class BattleshipMaker {
     // Instance Variables
-    private String carrier;
-    private String battleship;
-    private String cruiser;
-    private String submarine;
-    private String destroyer;
+    private String carrierCoord;
+    private String battleshipCoord;
+    private String cruiserCoord;
+    private String submarineCoord;
+    private String destroyerCoord;
     private String letters = "ABCDEFGHIJ";
     private String numbers = "1234567890";
-    private String carrierC = "";
+    private String carrierDirect = "";
+    private String battleshipDirect = "";
+    private String cruiserDirect = "";
+    private String submarineDirect = "";
+    private String destroyerDirect = "";
+    private String test = "";
 
     // Constructors
     /*
-    test constructor to access methods
+    empty constructor to access methods
      */
     public BattleshipMaker(){}
 
@@ -21,11 +26,11 @@ public class BattleshipMaker {
      */
     public BattleshipMaker(String coord1, String coord2, String coord3, String coord4, String coord5)
     {
-        carrier = coord1;
-        battleship = coord2;
-        cruiser = coord3;
-        submarine = coord4;
-        destroyer = coord5;
+        carrierCoord = coord1;
+        battleshipCoord = coord2;
+        cruiserCoord = coord3;
+        submarineCoord = coord4;
+        destroyerCoord = coord5;
     }
 
     // Methods
@@ -34,11 +39,64 @@ public class BattleshipMaker {
      */
     public void changeCoords(String coord1, String coord2, String coord3, String coord4, String coord5)
     {
-        carrier = coord1;
-        battleship = coord2;
-        cruiser = coord3;
-        submarine = coord4;
-        destroyer = coord5;
+        carrierCoord = coord1;
+        battleshipCoord = coord2;
+        cruiserCoord = coord3;
+        submarineCoord = coord4;
+        destroyerCoord = coord5;
+    }
+
+    /*
+    getter based on ship and coord/direction
+     */
+    public String getInfo(String ship, String infoType)
+    {
+        if (infoType.equals("coord"))
+        {
+            if (ship.equals("carrier"))
+            {
+                return carrierCoord;
+            }
+            else if (ship.equals("battleship"))
+            {
+                return battleshipCoord;
+            }
+            else if (ship.equals("cruiser"))
+            {
+                return cruiserCoord;
+            }
+            else if (ship.equals("submarine"))
+            {
+                return submarineCoord;
+            }
+            else
+            {
+                return destroyerCoord;
+            }
+        }
+        else
+        {
+            if (ship.equals("carrier"))
+            {
+                return carrierDirect;
+            }
+            else if (ship.equals("battleship"))
+            {
+                return battleshipDirect;
+            }
+            else if (ship.equals("cruiser"))
+            {
+                return cruiserDirect;
+            }
+            else if (ship.equals("submarine"))
+            {
+                return submarineDirect;
+            }
+            else
+            {
+                return destroyerDirect;
+            }
+        }
     }
 
     /*
@@ -83,11 +141,11 @@ public class BattleshipMaker {
         String updateBoard = "";
 
         // initialize an empty board and add to it ship by ship
-        updateBoard = addShip(emptyBoard,5,carrier,directCarrier);
-        updateBoard = addShip(updateBoard,4,battleship,directBattle);
-        updateBoard = addShip(updateBoard,3,cruiser,directCruiser);
-        updateBoard = addShip(updateBoard,3,submarine,directSub);
-        updateBoard = addShip(updateBoard,2,destroyer,directDestroy);
+        updateBoard = addShip(emptyBoard,5,carrierCoord,directCarrier);
+        updateBoard = addShip(updateBoard,4,battleshipCoord,directBattle);
+        updateBoard = addShip(updateBoard,3,cruiserCoord,directCruiser);
+        updateBoard = addShip(updateBoard,3,submarineCoord,directSub);
+        updateBoard = addShip(updateBoard,2,destroyerCoord,directDestroy);
 
         return updateBoard;
     }
@@ -223,20 +281,47 @@ public class BattleshipMaker {
         }
     }
 
+    /*
+    creates a board with a randomized set of ships
+    sets the ship coords and ship directions
+     */
     public String randomBoard()
     {
         String randomBoard = makeEmptyBoard();
 
+        // length of only the board itself is 253
         randomBoard = addRandomShip(randomBoard,5);
-        randomBoard = addRandomShip(randomBoard,4);
-        randomBoard = addRandomShip(randomBoard,3);
-        randomBoard = addRandomShip(randomBoard,3);
-        randomBoard = addRandomShip(randomBoard,2);
+        carrierCoord = randomBoard.substring(253, 253 + (randomBoard.substring(253)).indexOf(" "));
+        carrierDirect = randomBoard.substring((randomBoard.substring(253)).indexOf(" ") + 1);
+        randomBoard = randomBoard.substring(0,253);
 
+        randomBoard = addRandomShip(randomBoard,4);
+        battleshipCoord = randomBoard.substring(253, 253 + (randomBoard.substring(253)).indexOf(" "));
+        battleshipDirect = randomBoard.substring((randomBoard.substring(253)).indexOf(" ") + 1);
+        randomBoard = randomBoard.substring(0,253);
+
+        randomBoard = addRandomShip(randomBoard,3);
+        cruiserCoord = randomBoard.substring(253, 253 + (randomBoard.substring(253)).indexOf(" "));
+        cruiserDirect = randomBoard.substring((randomBoard.substring(253)).indexOf(" ") + 1);
+        randomBoard = randomBoard.substring(0,253);
+
+        randomBoard = addRandomShip(randomBoard,3);
+        submarineCoord = randomBoard.substring(253, 253 + (randomBoard.substring(253)).indexOf(" "));
+        submarineDirect = randomBoard.substring((randomBoard.substring(253)).indexOf(" ") + 1);
+        randomBoard = randomBoard.substring(0,253);
+
+        randomBoard = addRandomShip(randomBoard,2);
+        destroyerCoord = randomBoard.substring(253, 253 + (randomBoard.substring(253)).indexOf(" "));
+        destroyerDirect = randomBoard.substring((randomBoard.substring(253)).indexOf(" ") + 1);
+        randomBoard = randomBoard.substring(0,253);
 
         return randomBoard;
     }
 
+    /*
+    adds a ship of the specified length to the given base board
+    the coordinate and direction of the ship is randomized
+     */
     public String addRandomShip(String baseBoard, int shipLength)
     {
         boolean checked = false;
@@ -266,6 +351,8 @@ public class BattleshipMaker {
                     {
                         checked = true;
                         baseBoard = addShip(baseBoard, shipLength, coord, direction);
+                        // will be used to assign variables to keep track of coordinate and direction
+                        baseBoard += coord + " " + direction;
                     }
                 }
             }
@@ -278,7 +365,6 @@ public class BattleshipMaker {
     places a marker "#" on the provided board if the existing area is "o" (hit)
     returns a statement saying that the area has already been shot if above markers are already present
      */
-
     public String takeShot(String baseBoard, String coord)
     {
         String updateBoard = "";
@@ -312,23 +398,70 @@ public class BattleshipMaker {
         if (target.equals("+"))
         {
             result = "miss";
-            return result;
-        }
-        else if (target.equals("o"))
-        {
-            result = "hit";
-            return result;
         }
         else
         {
-            result = "space";
-            return result;
+            result = "hit";
+        }
+        return result;
+    }
+
+    /*
+    checks if a ship is up and alive
+    returns true if up, false if down
+     */
+    public boolean checkShipStatus(String baseBoard, int shipLength, String coord, String direction)
+    {
+        String shipStatus = "";
+        // gets to the index behind the coordinate
+        int behind = baseBoard.indexOf(coord.substring(1)) + 2 + (letters.indexOf(coord.substring(0,1)) + 1) * 2;
+
+        if (direction.equals("right"))
+        {
+            // creates a String that adds true or false depending on the status of each coordinate of the ship
+            for (int i = 0; i < shipLength; i++)
+            {
+                String check = baseBoard.substring(behind + (i * 2), behind + (i * 2) + 1);
+                if (check.equals("#"))
+                {
+                    shipStatus += "false";
+                }
+                else
+                {
+                    shipStatus += "true";
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < shipLength; i++)
+            {
+                String check = baseBoard.substring(behind + (i * 23), behind + (i * 23) + 1);
+                if (check.equals("#"))
+                {
+                    shipStatus += "false";
+                }
+                else
+                {
+                    shipStatus += "true";
+                }
+            }
+        }
+
+        test = shipStatus;
+        // searches the String for "true", which shows the ship is up, if not there (-1), returns false
+        if (shipStatus.indexOf("true") == -1)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
         }
     }
 
-    public boolean checkShipStatus(String checkBoard, int shipLength, String coord, String direction)
+    public void getTest()
     {
-
+        System.out.println(test);
     }
-
 }
