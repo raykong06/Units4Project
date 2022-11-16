@@ -1,6 +1,14 @@
 public class BattleshipMaker {
     // Instance Variables
+
+    private final String ANSI_RESET = "\u001B[0m";
+    private final String ANSI_RED = "\u001B[31m";
+    private final String ANSI_GREEN = "\u001B[32m";
+    private final String ANSI_YELLOW = "\u001B[33m";
+    private final String ANSI_CYAN = "\u001B[36m";
+
     private String carrierCoord;
+
     private String battleshipCoord;
     private String cruiserCoord;
     private String submarineCoord;
@@ -388,6 +396,17 @@ public class BattleshipMaker {
         {
             return "A shot has already been taken at " + coord + ". Please take another shot.";
         }
+        return updateBoard;
+    }
+
+    public String hitMarker(String baseBoard, String coord)
+    {
+        String updateBoard = "";
+        int behind = baseBoard.indexOf(coord.substring(1)) + 1 + (letters.indexOf(coord.substring(0,1)) + 1) * 2;
+        String target = baseBoard.substring(behind, behind + 1);
+
+            updateBoard = baseBoard.substring(0,behind) + "#" + baseBoard.substring(behind + 1);
+
         return updateBoard;
     }
 

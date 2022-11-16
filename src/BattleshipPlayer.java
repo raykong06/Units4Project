@@ -18,7 +18,10 @@ public class BattleshipPlayer {
         String destroyerDirect = "";
 
         String testBoard = test.makeEmptyBoard();
-        String playBoard = "";
+        String defensiveBoard = "";
+        String opponentBoard = "";
+        String attackBoard = "";
+        String originalBoard = "";
 
         boolean checked = false;
 
@@ -270,13 +273,15 @@ public class BattleshipPlayer {
 
         // Create Battleship Object
         BattleshipMaker play = new BattleshipMaker(carrierCoord,battleshipCoord,cruiserCoord,submarineCoord,destroyerCoord);
-        playBoard = play.setDefensiveBoard(carrierDirect,battleshipDirect,cruiserDirect,submarineDirect,destroyerDirect);
+        defensiveBoard = play.setDefensiveBoard(carrierDirect,battleshipDirect,cruiserDirect,submarineDirect,destroyerDirect);
 
          */
 
+
         BattleshipMaker opponent = new BattleshipMaker();
-        String opponentBoard = opponent.randomBoard();
-        System.out.println(opponentBoard);
+        opponentBoard = opponent.randomBoard();
+        attackBoard = opponent.makeEmptyBoard();
+        System.out.println(attackBoard);
 
         while (checkCarrier || checkBattleship || checkCruiser || checkSubmarine || checkDestroyer)
         {
@@ -286,14 +291,22 @@ public class BattleshipPlayer {
             {
                 if (opponent.takeShot(opponentBoard,input).equals("A shot has already been taken at " + input + ". Please take another shot."))
                 {
-                    System.out.print(opponent.takeShot(opponentBoard,input) + "\nTake another shot: ");
+                    System.out.print(opponent.takeShot(attackBoard,input) + "\nTake another shot: ");
                     input = s.nextLine();
                 }
             }
 
-            String originalBoard = opponentBoard;
-            opponentBoard = opponent.takeShot(originalBoard,input);
-            System.out.println("\n" + opponentBoard);
+            originalBoard = opponentBoard;
+            opponentBoard = opponent.takeShot(opponentBoard,input);
+            if ((opponent.checkHit(originalBoard,input)).equals("hit"))
+            {
+                attackBoard = opponent.hitMarker(attackBoard,input);
+            }
+            else
+            {
+                attackBoard = opponent.takeShot(attackBoard,input);
+            }
+            System.out.println("\n" + attackBoard);
             System.out.println("Your shot at " + input + " was a " + opponent.checkHit(originalBoard,input) + "!");
 
             checkCarrier = opponent.checkShipStatus(opponentBoard,5,opponent.getInfo("carrier","coord"),opponent.getInfo("carrier","direction"));
