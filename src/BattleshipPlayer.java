@@ -16,10 +16,23 @@ public class BattleshipPlayer {
         String cruiserDirect = "";
         String submarineDirect = "";
         String destroyerDirect = "";
+
         String testBoard = test.makeEmptyBoard();
         String playBoard = "";
 
         boolean checked = false;
+
+        boolean checkCarrier = true;
+        boolean checkBattleship = true;
+        boolean checkCruiser = true;
+        boolean checkSubmarine = true;
+        boolean checkDestroyer = true;
+
+        boolean carrierSunk = false;
+        boolean battleshipSunk = false;
+        boolean cruiserSunk = false;
+        boolean submarineSunk = false;
+        boolean destroyerSunk = false;
 
         // User Input Main Menu
         /*
@@ -264,9 +277,8 @@ public class BattleshipPlayer {
         BattleshipMaker opponent = new BattleshipMaker();
         String opponentBoard = opponent.randomBoard();
         System.out.println(opponentBoard);
-        boolean checkCarrier = true;
 
-        while (checkCarrier)
+        while (checkCarrier || checkBattleship || checkCruiser || checkSubmarine || checkDestroyer)
         {
             System.out.print("Your turn - Take your shot: ");
             input = s.nextLine();
@@ -283,9 +295,39 @@ public class BattleshipPlayer {
             opponentBoard = opponent.takeShot(originalBoard,input);
             System.out.println("\n" + opponentBoard);
             System.out.println("Your shot at " + input + " was a " + opponent.checkHit(originalBoard,input) + "!");
-            checkCarrier = opponent.checkShipStatus(opponentBoard,5,opponent.getInfo("carrier","coord"),opponent.getInfo("carrier","direction"));
-            opponent.getTest();
-        }
 
+            checkCarrier = opponent.checkShipStatus(opponentBoard,5,opponent.getInfo("carrier","coord"),opponent.getInfo("carrier","direction"));
+            checkBattleship = opponent.checkShipStatus(opponentBoard,4,opponent.getInfo("battleship","coord"),opponent.getInfo("battleship","direction"));
+            checkCruiser = opponent.checkShipStatus(opponentBoard,3,opponent.getInfo("cruiser","coord"),opponent.getInfo("cruiser","direction"));
+            checkSubmarine = opponent.checkShipStatus(opponentBoard,3,opponent.getInfo("submarine","coord"),opponent.getInfo("submarine","direction"));
+            checkDestroyer = opponent.checkShipStatus(opponentBoard,2,opponent.getInfo("destroyer","coord"),opponent.getInfo("destroyer","direction"));
+
+            if (!checkCarrier && !carrierSunk)
+            {
+                System.out.println("You sunk the opponent's carrier!");
+                carrierSunk = true;
+            }
+            else if (!checkBattleship && !battleshipSunk)
+            {
+                System.out.println("You sunk the opponent's battleship!");
+                battleshipSunk = true;
+            }
+            else if (!checkCruiser && !cruiserSunk)
+            {
+                System.out.println("You sunk the opponent's cruiser!");
+                cruiserSunk = true;
+            }
+            else if (!checkSubmarine && !submarineSunk)
+            {
+                System.out.println("You sunk the opponent's submarine!");
+                submarineSunk = true;
+            }
+            else if (!checkDestroyer && !destroyerSunk)
+            {
+                System.out.println("You sunk the opponent's destroyer!");
+                destroyerSunk = true;
+            }
+        }
+        System.out.println("You sunk all of your opponent's ships! You win!");
     }
 }

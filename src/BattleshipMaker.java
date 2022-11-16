@@ -12,7 +12,6 @@ public class BattleshipMaker {
     private String cruiserDirect = "";
     private String submarineDirect = "";
     private String destroyerDirect = "";
-    private String test = "";
 
     // Constructors
     /*
@@ -288,31 +287,37 @@ public class BattleshipMaker {
     public String randomBoard()
     {
         String randomBoard = makeEmptyBoard();
+        String directionExtract = "";
 
         // length of only the board itself is 253
         randomBoard = addRandomShip(randomBoard,5);
         carrierCoord = randomBoard.substring(253, 253 + (randomBoard.substring(253)).indexOf(" "));
-        carrierDirect = randomBoard.substring((randomBoard.substring(253)).indexOf(" ") + 1);
+        directionExtract = randomBoard.substring(253);
+        carrierDirect = directionExtract.substring((directionExtract.indexOf(" ") + 1));
         randomBoard = randomBoard.substring(0,253);
 
         randomBoard = addRandomShip(randomBoard,4);
         battleshipCoord = randomBoard.substring(253, 253 + (randomBoard.substring(253)).indexOf(" "));
-        battleshipDirect = randomBoard.substring((randomBoard.substring(253)).indexOf(" ") + 1);
+        directionExtract = randomBoard.substring(253);
+        battleshipDirect = directionExtract.substring((directionExtract.indexOf(" ") + 1));
         randomBoard = randomBoard.substring(0,253);
 
         randomBoard = addRandomShip(randomBoard,3);
         cruiserCoord = randomBoard.substring(253, 253 + (randomBoard.substring(253)).indexOf(" "));
-        cruiserDirect = randomBoard.substring((randomBoard.substring(253)).indexOf(" ") + 1);
+        directionExtract = randomBoard.substring(253);
+        cruiserDirect = directionExtract.substring((directionExtract.indexOf(" ") + 1));
         randomBoard = randomBoard.substring(0,253);
 
         randomBoard = addRandomShip(randomBoard,3);
         submarineCoord = randomBoard.substring(253, 253 + (randomBoard.substring(253)).indexOf(" "));
-        submarineDirect = randomBoard.substring((randomBoard.substring(253)).indexOf(" ") + 1);
+        directionExtract = randomBoard.substring(253);
+        submarineDirect = directionExtract.substring((directionExtract.indexOf(" ") + 1));
         randomBoard = randomBoard.substring(0,253);
 
         randomBoard = addRandomShip(randomBoard,2);
         destroyerCoord = randomBoard.substring(253, 253 + (randomBoard.substring(253)).indexOf(" "));
-        destroyerDirect = randomBoard.substring((randomBoard.substring(253)).indexOf(" ") + 1);
+        directionExtract = randomBoard.substring(253);
+        destroyerDirect = directionExtract.substring((directionExtract.indexOf(" ") + 1));
         randomBoard = randomBoard.substring(0,253);
 
         return randomBoard;
@@ -419,9 +424,9 @@ public class BattleshipMaker {
         if (direction.equals("right"))
         {
             // creates a String that adds true or false depending on the status of each coordinate of the ship
-            for (int i = 0; i < shipLength; i++)
+            for (int i = 0; i < shipLength * 2; i += 2)
             {
-                String check = baseBoard.substring(behind + (i * 2), behind + (i * 2) + 1);
+                String check = baseBoard.substring(behind + i, behind + i + 1);
                 if (check.equals("#"))
                 {
                     shipStatus += "false";
@@ -448,9 +453,8 @@ public class BattleshipMaker {
             }
         }
 
-        test = shipStatus;
         // searches the String for "true", which shows the ship is up, if not there (-1), returns false
-        if (shipStatus.indexOf("true") == -1)
+        if (!shipStatus.contains("true"))
         {
             return false;
         }
@@ -460,8 +464,4 @@ public class BattleshipMaker {
         }
     }
 
-    public void getTest()
-    {
-        System.out.println(test);
-    }
 }
