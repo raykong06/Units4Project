@@ -38,7 +38,6 @@ public class BattleshipPlayer {
         boolean destroyerSunk = false;
 
         // User Input Main Menu
-        /*
         System.out.println("Welcome to the Battleship Game.\nType \"P\" to play.\nType \"I\" for info on how to play.");
         input = s.nextLine();
 
@@ -275,13 +274,11 @@ public class BattleshipPlayer {
         BattleshipMaker play = new BattleshipMaker(carrierCoord,battleshipCoord,cruiserCoord,submarineCoord,destroyerCoord);
         defensiveBoard = play.setDefensiveBoard(carrierDirect,battleshipDirect,cruiserDirect,submarineDirect,destroyerDirect);
 
-         */
-
 
         BattleshipMaker opponent = new BattleshipMaker();
         opponentBoard = opponent.randomBoard();
         attackBoard = opponent.makeEmptyBoard();
-        System.out.println(attackBoard);
+        System.out.println(opponentBoard);
 
         while (checkCarrier || checkBattleship || checkCruiser || checkSubmarine || checkDestroyer)
         {

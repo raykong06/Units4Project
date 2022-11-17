@@ -237,17 +237,47 @@ public class BattleshipMaker {
      */
     public boolean coordChecker(String coord)
     {
-        String letter = coord.substring(0,1);
-        int num = Integer.parseInt(coord.substring(1));
-
-        if (letters.indexOf(letter) != -1 && num <= 10 && num >= 1)
-        {
-            return true;
-        }
-        else
+        if (coord.length() > 3)
         {
             return false;
         }
+
+        int checker = 0;
+        for (int index = 0; index < coord.length(); index++)
+        {
+            for (int i = 0; i < letters.length(); i++)
+            {
+                if (index == 0)
+                {
+                    if (coord.substring(index, index + 1).equals(letters.substring(i, i + 1)))
+                    {
+                        checker++;
+                    }
+                }
+                else
+                {
+                    if (coord.substring(index, index + 1).equals(letters.substring(i, i + 1)))
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        if (checker > 0)
+        {
+            String letter = coord.substring(0,1);
+            int num = Integer.parseInt(coord.substring(1));
+            if (letters.indexOf(letter) != -1 && num <= 10 && num >= 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return false;
     }
 
     /*
