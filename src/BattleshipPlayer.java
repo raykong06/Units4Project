@@ -2,7 +2,7 @@ import java.util.Scanner;
 public class BattleshipPlayer {
     public static void main(String[] args) {
         // Instance Variables
-        BattleshipMaker test = new BattleshipMaker();
+        BattleshipMaker setup = new BattleshipMaker();
         Scanner s = new Scanner(System.in);
         String input = "";
 
@@ -17,7 +17,7 @@ public class BattleshipPlayer {
         String submarineDirect = "";
         String destroyerDirect = "";
 
-        String testBoard = test.makeEmptyBoard();
+        String setupBoard = setup.makeEmptyBoard();
         String defensiveBoard = "";
         String opponentBoard = "";
         String attackBoard = "";
@@ -45,24 +45,7 @@ public class BattleshipPlayer {
         {
             if(input.equals("I"))
             {
-                System.out.println("Object of the game: Be the first to sink all 5 of the opponent's ships. You are playing against the program AI.\n" +
-                        "Symbol Meaning:\n" +
-                        "+ : Empty area\n" +
-                        "o : Your Battleship (on Defense)\n" +
-                        "x : Your Missed Attacks (on Offense)\n" +
-                        "# : Successful Hit Areas\n" +
-                        "\n" +
-                        "You have a fleet of 5 total battleships:\n" +
-                        "Carrier (5-long)\n" +
-                        "Battleship (4-long)\n" +
-                        "Cruiser (3-long)\n" +
-                        "Submarine (3-long)\n" +
-                        "Destroyer (2-long)\n" +
-                        "\n" +
-                        "You will be spectating an offensive board and a defensive board.\n" +
-                        "Your attacks and board setup must be within the parameters of the board.\n" +
-                        "Please specify coordinates in this format: A1 (letter must be capitalized)\n" +
-                        "If asked for direction, your battleship will either go \"right\" or \"down\" from your specified coordinate.\n");
+                System.out.println(setup);
             }
             else
             {
@@ -74,7 +57,7 @@ public class BattleshipPlayer {
 
         // Ask for Ship Coords
         System.out.println("This is an example empty battleship grid:");
-        System.out.println(testBoard);
+        System.out.println(setupBoard);
 
         // Carrier
         while(checked == false)
@@ -82,7 +65,7 @@ public class BattleshipPlayer {
             System.out.print("Please type your carrier (5-long) coordinate: ");
             carrierCoord = s.nextLine();
 
-            while(test.coordChecker(carrierCoord) == false)
+            while(setup.coordChecker(carrierCoord) == false)
             {
                 System.out.print("That is not a valid coordinate. Please re-enter a valid coordinate: ");
                 carrierCoord = s.nextLine();
@@ -96,7 +79,7 @@ public class BattleshipPlayer {
                 System.out.print("That is not a valid direction. Please re-enter a valid direction: ");
                 carrierDirect = s.nextLine();
             }
-            if(test.limitChecker(5,carrierCoord,carrierDirect) == false)
+            if(setup.limitChecker(5,carrierCoord,carrierDirect) == false)
             {
                 System.out.println("The ship you described would not fit within the parameters of the board.\n" +
                         "Please re-enter a valid coordinate and direction.\n");
@@ -107,8 +90,8 @@ public class BattleshipPlayer {
             }
         }
 
-        testBoard = test.addShip(testBoard,5,carrierCoord,carrierDirect);
-        System.out.println("\nYou successfully added your carrier:\n" + testBoard);
+        setupBoard = setup.addShip(setupBoard,5,carrierCoord,carrierDirect);
+        System.out.println("\nYou successfully added your carrier:\n" + setupBoard);
         checked = false;
 
         // Battleship
@@ -117,7 +100,7 @@ public class BattleshipPlayer {
             System.out.print("Please type your battleship (4-long) coordinate: ");
             battleshipCoord = s.nextLine();
 
-            while(test.coordChecker(battleshipCoord) == false)
+            while(setup.coordChecker(battleshipCoord) == false)
             {
                 System.out.print("That is not a valid coordinate. Please re-enter a valid coordinate: ");
                 battleshipCoord = s.nextLine();
@@ -131,12 +114,12 @@ public class BattleshipPlayer {
                 System.out.print("That is not a valid direction. Please re-enter a valid direction: ");
                 battleshipDirect = s.nextLine();
             }
-            if(test.limitChecker(4,battleshipCoord,battleshipDirect) == false)
+            if(setup.limitChecker(4,battleshipCoord,battleshipDirect) == false)
             {
                 System.out.println("The ship you described would not fit within the parameters of the board.\n" +
                         "Please re-enter a valid coordinate and direction.\n");
             }
-            else if(!(test.overlapChecker(testBoard,4,battleshipCoord,battleshipDirect)))
+            else if(!(setup.overlapChecker(setupBoard,4,battleshipCoord,battleshipDirect)))
             {
                 System.out.println("The ship you described would overlap with an existing ship.\n" +
                         "Please re-enter a valid coordinate and direction.\n");
@@ -147,8 +130,8 @@ public class BattleshipPlayer {
             }
         }
 
-        testBoard = test.addShip(testBoard,4,battleshipCoord,battleshipDirect);
-        System.out.println("\nYou successfully added your battleship:\n" + testBoard);
+        setupBoard = setup.addShip(setupBoard,4,battleshipCoord,battleshipDirect);
+        System.out.println("\nYou successfully added your battleship:\n" + setupBoard);
         checked = false;
 
         // Cruiser
@@ -157,7 +140,7 @@ public class BattleshipPlayer {
             System.out.print("Please type your cruiser (3-long) coordinate: ");
             cruiserCoord = s.nextLine();
 
-            while(test.coordChecker(cruiserCoord) == false)
+            while(setup.coordChecker(cruiserCoord) == false)
             {
                 System.out.print("That is not a valid coordinate. Please re-enter a valid coordinate: ");
                 cruiserCoord = s.nextLine();
@@ -171,12 +154,12 @@ public class BattleshipPlayer {
                 System.out.print("That is not a valid direction. Please re-enter a valid direction: ");
                 cruiserDirect = s.nextLine();
             }
-            if(test.limitChecker(3,cruiserCoord,cruiserDirect) == false)
+            if(setup.limitChecker(3,cruiserCoord,cruiserDirect) == false)
             {
                 System.out.println("The ship you described would not fit within the parameters of the board.\n" +
                         "Please re-enter a valid coordinate and direction.\n");
             }
-            else if(!(test.overlapChecker(testBoard,3,cruiserCoord,cruiserDirect)))
+            else if(!(setup.overlapChecker(setupBoard,3,cruiserCoord,cruiserDirect)))
             {
                 System.out.println("The ship you described would overlap with an existing ship.\n" +
                         "Please re-enter a valid coordinate and direction.\n");
@@ -187,8 +170,8 @@ public class BattleshipPlayer {
             }
         }
 
-        testBoard = test.addShip(testBoard,3,cruiserCoord,cruiserDirect);
-        System.out.println("\nYou successfully added your cruiser:\n" + testBoard);
+        setupBoard = setup.addShip(setupBoard,3,cruiserCoord,cruiserDirect);
+        System.out.println("\nYou successfully added your cruiser:\n" + setupBoard);
         checked = false;
 
         // Submarine
@@ -197,7 +180,7 @@ public class BattleshipPlayer {
             System.out.print("Please type your submarine (3-long) coordinate: ");
             submarineCoord = s.nextLine();
 
-            while(test.coordChecker(submarineCoord) == false)
+            while(setup.coordChecker(submarineCoord) == false)
             {
                 System.out.print("That is not a valid coordinate. Please re-enter a valid coordinate: ");
                 submarineCoord = s.nextLine();
@@ -211,12 +194,12 @@ public class BattleshipPlayer {
                 System.out.print("That is not a valid direction. Please re-enter a valid direction: ");
                 submarineDirect = s.nextLine();
             }
-            if(test.limitChecker(3,submarineCoord,submarineDirect) == false)
+            if(setup.limitChecker(3,submarineCoord,submarineDirect) == false)
             {
                 System.out.println("The ship you described would not fit within the parameters of the board.\n" +
                         "Please re-enter a valid coordinate and direction.\n");
             }
-            else if(!(test.overlapChecker(testBoard,3,submarineCoord,submarineDirect)))
+            else if(!(setup.overlapChecker(setupBoard,3,submarineCoord,submarineDirect)))
             {
                 System.out.println("The ship you described would overlap with an existing ship.\n" +
                         "Please re-enter a valid coordinate and direction.\n");
@@ -227,8 +210,8 @@ public class BattleshipPlayer {
             }
         }
 
-        testBoard = test.addShip(testBoard,3,submarineCoord,submarineDirect);
-        System.out.println("\nYou successfully added your submarine:\n" + testBoard);
+        setupBoard = setup.addShip(setupBoard,3,submarineCoord,submarineDirect);
+        System.out.println("\nYou successfully added your submarine:\n" + setupBoard);
         checked = false;
 
         // Destroyer
@@ -237,7 +220,7 @@ public class BattleshipPlayer {
             System.out.print("Please type your destroyer (2-long) coordinate: ");
             destroyerCoord = s.nextLine();
 
-            while(test.coordChecker(destroyerCoord) == false)
+            while(setup.coordChecker(destroyerCoord) == false)
             {
                 System.out.print("That is not a valid coordinate. Please re-enter a valid coordinate: ");
                 destroyerCoord = s.nextLine();
@@ -251,12 +234,12 @@ public class BattleshipPlayer {
                 System.out.print("That is not a valid direction. Please re-enter a valid direction: ");
                 destroyerDirect = s.nextLine();
             }
-            if(test.limitChecker(2,destroyerCoord,destroyerDirect) == false)
+            if(setup.limitChecker(2,destroyerCoord,destroyerDirect) == false)
             {
                 System.out.println("The ship you described would not fit within the parameters of the board.\n" +
                         "Please re-enter a valid coordinate and direction.\n");
             }
-            else if(!(test.overlapChecker(testBoard,2,destroyerCoord,destroyerDirect)))
+            else if(!(setup.overlapChecker(setupBoard,2,destroyerCoord,destroyerDirect)))
             {
                 System.out.println("The ship you described would overlap with an existing ship.\n" +
                         "Please re-enter a valid coordinate and direction.\n");
@@ -267,30 +250,28 @@ public class BattleshipPlayer {
             }
         }
 
-        testBoard = test.addShip(testBoard,2,destroyerCoord,destroyerDirect);
-        System.out.println("\nYou successfully added your destroyer:\n" + testBoard);
+        setupBoard = setup.addShip(setupBoard,2,destroyerCoord,destroyerDirect);
+        System.out.println("\nYou successfully added your destroyer:\n" + setupBoard);
 
-        // Create Battleship Object
+        // Create Objects
         BattleshipMaker play = new BattleshipMaker(carrierCoord,battleshipCoord,cruiserCoord,submarineCoord,destroyerCoord);
         defensiveBoard = play.setDefensiveBoard(carrierDirect,battleshipDirect,cruiserDirect,submarineDirect,destroyerDirect);
 
+        AI ai = new AI(defensiveBoard,carrierCoord,battleshipCoord,cruiserCoord,submarineCoord,destroyerCoord,carrierDirect,battleshipDirect,cruiserDirect,submarineDirect,destroyerDirect);
 
         BattleshipMaker opponent = new BattleshipMaker();
         opponentBoard = opponent.randomBoard();
         attackBoard = opponent.makeEmptyBoard();
-        System.out.println(opponentBoard);
 
-        while (checkCarrier || checkBattleship || checkCruiser || checkSubmarine || checkDestroyer)
+        while ((checkCarrier || checkBattleship || checkCruiser || checkSubmarine || checkDestroyer) || (ai.checkSinkStatus(defensiveBoard)))
         {
+            System.out.println(attackBoard);
             System.out.print("Your turn - Take your shot: ");
             input = s.nextLine();
             while (opponent.takeShot(opponentBoard,input).equals("A shot has already been taken at " + input + ". Please take another shot."))
             {
-                if (opponent.takeShot(opponentBoard,input).equals("A shot has already been taken at " + input + ". Please take another shot."))
-                {
                     System.out.print(opponent.takeShot(attackBoard,input) + "\nTake another shot: ");
                     input = s.nextLine();
-                }
             }
 
             originalBoard = opponentBoard;
@@ -337,7 +318,22 @@ public class BattleshipPlayer {
                 System.out.println("You sunk the opponent's destroyer!");
                 destroyerSunk = true;
             }
+
+            // AI Turn
+
+            ai.aiTurn();
+            defensiveBoard = ai.getAttackBoard();
+            System.out.println(defensiveBoard);
+            System.out.println("Your opponent shot at " + ai.getDisplayCoord() + "!\n\n");
         }
-        System.out.println("You sunk all of your opponent's ships! You win!");
+
+        if (checkCarrier || checkBattleship || checkCruiser || checkSubmarine || checkDestroyer)
+        {
+            System.out.println("You sunk all of your opponent's ships! You win!");
+        }
+        else if (ai.checkSinkStatus(defensiveBoard))
+        {
+            System.out.println("You lost! Your opponent sunk all of your ships!");
+        }
     }
 }
