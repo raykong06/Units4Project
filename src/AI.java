@@ -94,6 +94,10 @@ public class AI {
 
                 if (continueShot)
                 {
+                    if ((ai.checkHit(attackBoard,displayCoord).equals("miss")))
+                    {
+                        direction += 2;
+                    }
                     if (direction == 1)
                     {
                         coord = LETTERS.substring(LETTERS.indexOf(continueCoord.substring(0,1)) - 1,LETTERS.indexOf(continueCoord.substring(0,1))) + continueCoord.substring(1);
@@ -149,6 +153,7 @@ public class AI {
             {
                 direction++;
             }
+
         }
         else
         {
