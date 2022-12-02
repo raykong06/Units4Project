@@ -10,6 +10,7 @@ public class AI {
     private String change;
     private String successfulCoord;
     private String displayCoord;
+    private String displayResult;
 
     private String carrierCoord;
 
@@ -84,17 +85,11 @@ public class AI {
         {
             while (!successfulShot)
             {
-                if ((LETTERS.indexOf(successfulCoord.substring(0,1)) - 1 == -1) && direction == 1)
+                if (((LETTERS.indexOf(successfulCoord.substring(0,1)) - 1 == -1) && direction == 1) ||
+                ((Integer.parseInt(successfulCoord.substring(1)) + 1 == 11) && direction == 2) ||
+                ((LETTERS.indexOf(successfulCoord.substring(0,1)) + 1 == 10) && direction == 3))
                 {
-                    direction = 2;
-                }
-                if ((Integer.parseInt(successfulCoord.substring(1)) + 1 == 11) && direction == 2)
-                {
-                    direction = 3;
-                }
-                if ((LETTERS.indexOf(successfulCoord.substring(0,1)) + 1 == 10) && direction == 3)
-                {
-                    direction = 4;
+                    direction++;
                 }
 
                 if (continueShot)
@@ -116,7 +111,6 @@ public class AI {
                         coord = continueCoord.substring(0,1) + (Integer.parseInt(continueCoord.substring(1)) - 1);
                     }
                 }
-
                 else if (direction == 1)
                 {
                     coord = LETTERS.substring(LETTERS.indexOf(successfulCoord.substring(0,1)) - 1,LETTERS.indexOf(successfulCoord.substring(0,1))) + successfulCoord.substring(1);
@@ -155,7 +149,6 @@ public class AI {
             {
                 direction++;
             }
-            displayCoord = coord;
         }
         else
         {
@@ -170,7 +163,6 @@ public class AI {
                 coord = ai.randomCoord();
             }
             attackBoard = ai.takeShot(attackBoard,coord);
-            displayCoord = coord;
             if (ai.checkHit(attackBoard,coord).equals("hit"))
             {
                 hitStatus = true;
@@ -179,8 +171,8 @@ public class AI {
             }
         }
 
-        System.out.println(change);
-        System.out.println(checkChange);
+        displayResult = ai.checkHit(attackBoard,coord);
+        displayCoord = coord;
     }
 
     public String getAttackBoard()
@@ -198,6 +190,11 @@ public class AI {
         }
 
         return sinkStatus;
+    }
+
+    public String getDisplayResult()
+    {
+        return displayResult;
     }
 
     public String getDisplayCoord()

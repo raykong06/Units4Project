@@ -324,7 +324,7 @@ public class BattleshipPlayer {
             ai.aiTurn();
             defensiveBoard = ai.getAttackBoard();
             System.out.println(defensiveBoard);
-            System.out.println("Your opponent shot at " + ai.getDisplayCoord() + "!\n\n");
+            System.out.println("Your opponent shot a " + ai.getDisplayResult() + " at " + ai.getDisplayCoord() + "!\n\n");
         }
 
         if (checkCarrier || checkBattleship || checkCruiser || checkSubmarine || checkDestroyer)
