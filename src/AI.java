@@ -32,7 +32,7 @@ public class AI {
     public AI(String attackBoard, String carrierCoord, String battleshipCoord, String cruiserCoord, String submarineCoord, String destroyerCoord, String carrierDirect, String battleshipDirect, String cruiserDirect, String submarineDirect, String destroyerDirect)
     {
         this.attackBoard = attackBoard;
-        sinkStatus = false;
+        sinkStatus = true;
         hitStatus = false;
 
         this.carrierCoord = carrierCoord;
@@ -94,10 +94,6 @@ public class AI {
 
                 if (continueShot)
                 {
-                    if ((ai.checkHit(attackBoard,displayCoord).equals("miss")))
-                    {
-                        direction += 2;
-                    }
                     if (direction == 1)
                     {
                         coord = LETTERS.substring(LETTERS.indexOf(continueCoord.substring(0,1)) - 1,LETTERS.indexOf(continueCoord.substring(0,1))) + continueCoord.substring(1);
@@ -113,6 +109,27 @@ public class AI {
                     else if (direction == 4)
                     {
                         coord = continueCoord.substring(0,1) + (Integer.parseInt(continueCoord.substring(1)) - 1);
+                    }
+
+                    if ((ai.checkHit(attackBoard,displayCoord).equals("miss")))
+                    {
+                        if (direction == 2)
+                        {
+                            direction = 3;
+                        }
+                        else if (direction == 3)
+                        {
+                            direction = 4;
+                        }
+
+                        if (direction == 3)
+                        {
+                            coord = LETTERS.substring(LETTERS.indexOf(successfulCoord.substring(0,1)) + 1,LETTERS.indexOf(successfulCoord.substring(0,1)) + 2) + successfulCoord.substring(1);
+                        }
+                        else if (direction == 4)
+                        {
+                            coord = successfulCoord.substring(0,1) + (Integer.parseInt(successfulCoord.substring(1)) - 1);
+                        }
                     }
                 }
                 else if (direction == 1)
@@ -139,6 +156,7 @@ public class AI {
                 if ((ai.takeShot(attackBoard,coord)).equals("A shot has already been taken at " + coord + ". Please take another shot."))
                 {
                     successfulShot = false;
+                    direction++;
                 }
             }
 
@@ -185,13 +203,34 @@ public class AI {
         return attackBoard;
     }
 
-    public boolean checkSinkStatus(String board)
+    public boolean checkSinkStatus()
     {
-        if ((ai.checkShipStatus(board,5,carrierCoord,carrierDirect)) && (ai.checkShipStatus(board,4,battleshipCoord,battleshipDirect))
-            && (ai.checkShipStatus(board,3,cruiserCoord,cruiserDirect)) && (ai.checkShipStatus(board,3,submarineCoord,submarineDirect))
-            && (ai.checkShipStatus(board,2,destroyerCoord,destroyerDirect)))
+        String checkChange;
+
+        if (ai.checkShipStatus(attackBoard,5,carrierCoord,carrierDirect))
         {
-            sinkStatus = true;
+            checkChange = "t";
+        } else checkChange = "f";
+        if (ai.checkShipStatus(attackBoard,4,battleshipCoord,battleshipDirect))
+        {
+            checkChange += "t";
+        } else checkChange += "f";
+        if (ai.checkShipStatus(attackBoard,3,cruiserCoord,cruiserDirect))
+        {
+            checkChange += "t";
+        } else checkChange += "f";
+        if (ai.checkShipStatus(attackBoard,3,submarineCoord,submarineDirect))
+        {
+            checkChange += "t";
+        } else checkChange += "f";
+        if (ai.checkShipStatus(attackBoard,2,destroyerCoord,destroyerDirect))
+        {
+            checkChange += "t";
+        } else checkChange += "f";
+
+        if (checkChange.equals("fffff"))
+        {
+            sinkStatus = false;
         }
 
         return sinkStatus;

@@ -21,7 +21,6 @@ public class BattleshipPlayer {
         String defensiveBoard = "";
         String opponentBoard = "";
         String attackBoard = "";
-        String originalBoard = "";
 
         boolean checked = false;
 
@@ -263,20 +262,28 @@ public class BattleshipPlayer {
         opponentBoard = opponent.randomBoard();
         attackBoard = opponent.makeEmptyBoard();
 
-        while ((checkCarrier || checkBattleship || checkCruiser || checkSubmarine || checkDestroyer) || (ai.checkSinkStatus(defensiveBoard)))
+        System.out.println(opponentBoard);
+
+        while ((checkCarrier || checkBattleship || checkCruiser || checkSubmarine || checkDestroyer) && (ai.checkSinkStatus()))
         {
             System.out.println(attackBoard);
             System.out.print("Your turn - Take your shot: ");
             input = s.nextLine();
+
+            while(opponent.coordChecker(input) == false)
+            {
+                System.out.print("That is not a valid coordinate. Please re-enter a valid coordinate: ");
+                input = s.nextLine();
+            }
+
             while (opponent.takeShot(opponentBoard,input).equals("A shot has already been taken at " + input + ". Please take another shot."))
             {
                     System.out.print(opponent.takeShot(attackBoard,input) + "\nTake another shot: ");
                     input = s.nextLine();
             }
 
-            originalBoard = opponentBoard;
             opponentBoard = opponent.takeShot(opponentBoard,input);
-            if ((opponent.checkHit(originalBoard,input)).equals("hit"))
+            if ((opponent.checkHit(opponentBoard,input)).equals("hit"))
             {
                 attackBoard = opponent.hitMarker(attackBoard,input);
             }
@@ -285,7 +292,7 @@ public class BattleshipPlayer {
                 attackBoard = opponent.takeShot(attackBoard,input);
             }
             System.out.println("\n" + attackBoard);
-            System.out.println("Your shot at " + input + " was a " + opponent.checkHit(originalBoard,input) + "!");
+            System.out.println("Your shot at " + input + " was a " + opponent.checkHit(opponentBoard,input) + "!");
 
             checkCarrier = opponent.checkShipStatus(opponentBoard,5,opponent.getInfo("carrier","coord"),opponent.getInfo("carrier","direction"));
             checkBattleship = opponent.checkShipStatus(opponentBoard,4,opponent.getInfo("battleship","coord"),opponent.getInfo("battleship","direction"));
@@ -331,7 +338,7 @@ public class BattleshipPlayer {
         {
             System.out.println("You sunk all of your opponent's ships! You win!");
         }
-        else if (ai.checkSinkStatus(defensiveBoard))
+        else if (ai.checkSinkStatus())
         {
             System.out.println("You lost! Your opponent sunk all of your ships!");
         }

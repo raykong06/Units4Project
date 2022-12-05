@@ -19,7 +19,8 @@ public class BattleshipMaker {
     /*
     empty constructor to access methods
      */
-    public BattleshipMaker(){}
+    public BattleshipMaker()
+    {}
 
     /*
     creation of an object of this class that assigns the ship coordinates
@@ -113,7 +114,7 @@ public class BattleshipMaker {
             // 20 columns
             for (int index = 0; index < LETTERS.length(); index++)
             {
-                emptyBoard = emptyBoard + " o";
+                emptyBoard = emptyBoard + " +";
             }
             emptyBoard = emptyBoard + "\n";
         }
@@ -159,7 +160,7 @@ public class BattleshipMaker {
         {
             for (int i = 0; i < shipLength; i++)
             {
-                updateBoard = updateBoard + " +";
+                updateBoard = updateBoard + " o";
             }
             updateBoard = updateBoard + baseBoard.substring(behind + shipLength * 2);
         }
@@ -171,7 +172,7 @@ public class BattleshipMaker {
             int inBetween = behind;
             for (int i = 0; i < shipLength; i++)
             {
-                updateBoard = updateBoard + " +";
+                updateBoard = updateBoard + " o";
                 // if else statement prevents out of bounds exception
                 if (i < shipLength - 1)
                 {
@@ -220,7 +221,7 @@ public class BattleshipMaker {
      */
     public boolean coordChecker(String coord)
     {
-        if (coord.length() > 3)
+        if ((coord.length() != 2) && (coord.length() != 3))
         {
             return false;
         }
@@ -250,6 +251,14 @@ public class BattleshipMaker {
         if (checker > 0)
         {
             String letter = coord.substring(0,1);
+            if (NUMBERS.indexOf(coord.substring(1,2)) == -1)
+            {
+                return false;
+            }
+            if ((coord.length() == 3) && (NUMBERS.indexOf(coord.substring(2,3)) == -1))
+            {
+                return false;
+            }
             int num = Integer.parseInt(coord.substring(1));
             if (LETTERS.indexOf(letter) != -1 && num <= 10 && num >= 1)
             {
@@ -280,7 +289,7 @@ public class BattleshipMaker {
             for(int i = 0; i < shipLength * 2; i += 2)
             {
                 String check = baseBoard.substring(behind + i, behind + i + 1);
-                if (check.equals("+"))
+                if (check.equals("o"))
                 {
                     return false;
                 }
@@ -292,7 +301,7 @@ public class BattleshipMaker {
             for(int i = 0; i < shipLength; i++)
             {
                 String check = baseBoard.substring(behind + (i * 23),behind + (i * 23) + 1);
-                if (check.equals("+"))
+                if (check.equals("o"))
                 {
                     return false;
                 }
@@ -406,13 +415,13 @@ public class BattleshipMaker {
         int behind = baseBoard.indexOf(coord.substring(1)) + 1 + (LETTERS.indexOf(coord.substring(0,1)) + 1) * 2;
         String target = baseBoard.substring(behind, behind + 1);
 
-        if (target.equals("o"))
-        {
-            updateBoard = baseBoard.substring(0,behind) + "#" + baseBoard.substring(behind + 1);
-        }
-        else if (target.equals("+"))
+        if (target.equals("+"))
         {
             updateBoard = baseBoard.substring(0,behind) + "x" + baseBoard.substring(behind + 1);
+        }
+        else if (target.equals("o"))
+        {
+            updateBoard = baseBoard.substring(0,behind) + "#" + baseBoard.substring(behind + 1);
         }
         else
         {
@@ -427,7 +436,7 @@ public class BattleshipMaker {
         int behind = baseBoard.indexOf(coord.substring(1)) + 1 + (LETTERS.indexOf(coord.substring(0,1)) + 1) * 2;
         String target = baseBoard.substring(behind, behind + 1);
 
-            updateBoard = baseBoard.substring(0,behind) + "x" + baseBoard.substring(behind + 1);
+            updateBoard = baseBoard.substring(0,behind) + "#" + baseBoard.substring(behind + 1);
 
         return updateBoard;
     }
@@ -441,7 +450,7 @@ public class BattleshipMaker {
         int behind = baseBoard.indexOf(coord.substring(1)) + 1 + (LETTERS.indexOf(coord.substring(0,1)) + 1) * 2;
         String target = baseBoard.substring(behind, behind + 1);
 
-        if (target.equals("o") || target.equals("+"))
+        if (target.equals("+") || target.equals("x") || target.equals("o"))
         {
             result = "miss";
         }
@@ -468,7 +477,7 @@ public class BattleshipMaker {
             for (int i = 0; i < shipLength * 2; i += 2)
             {
                 String check = baseBoard.substring(behind + i, behind + i + 1);
-                if (check.equals("x"))
+                if (check.equals("#"))
                 {
                     shipStatus += "false";
                 }
@@ -483,7 +492,7 @@ public class BattleshipMaker {
             for (int i = 0; i < shipLength; i++)
             {
                 String check = baseBoard.substring(behind + (i * 23), behind + (i * 23) + 1);
-                if (check.equals("x"))
+                if (check.equals("#"))
                 {
                     shipStatus += "false";
                 }
@@ -510,10 +519,10 @@ public class BattleshipMaker {
     {
         String info = "Object of the game: Be the first to sink all 5 of the opponent's ships. You are playing against the program AI.\n" +
                 "Symbol Meaning:\n" +
-                "o : Empty area\n" +
-                "+ : Your Battleship (on Defense)\n" +
-                "# : Your Missed Attacks (on Offense)\n" +
-                "x : Successful Hit Areas\n" +
+                "+ : Empty area\n" +
+                "o : Your Battleship (on Defense)\n" +
+                "x : Your Missed Attacks (on Offense)\n" +
+                "# : Successful Hit Areas\n" +
                 "\n" +
                 "You have a fleet of 5 total battleships:\n" +
                 "Carrier (5-long)\n" +
