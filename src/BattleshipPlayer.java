@@ -1,10 +1,13 @@
 import java.util.Scanner;
 public class BattleshipPlayer {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         // Instance Variables
         BattleshipMaker setup = new BattleshipMaker();
         Scanner s = new Scanner(System.in);
         String input = "";
+
+        final String ANSI_RED = "\u001B[31m";
+        final String ANSI_RESET = "\u001B[0m";
 
         String carrierCoord = "";
         String battleshipCoord = "";
@@ -262,7 +265,7 @@ public class BattleshipPlayer {
         opponentBoard = opponent.randomBoard();
         attackBoard = opponent.makeEmptyBoard();
 
-        System.out.println(opponentBoard);
+        //System.out.println(opponentBoard);
 
         while ((checkCarrier || checkBattleship || checkCruiser || checkSubmarine || checkDestroyer) && (ai.checkSinkStatus()))
         {
@@ -300,6 +303,7 @@ public class BattleshipPlayer {
             checkSubmarine = opponent.checkShipStatus(opponentBoard,3,opponent.getInfo("submarine","coord"),opponent.getInfo("submarine","direction"));
             checkDestroyer = opponent.checkShipStatus(opponentBoard,2,opponent.getInfo("destroyer","coord"),opponent.getInfo("destroyer","direction"));
 
+            System.out.print(ANSI_RED);
             if (!checkCarrier && !carrierSunk)
             {
                 System.out.println("You sunk the opponent's carrier!");
@@ -325,22 +329,28 @@ public class BattleshipPlayer {
                 System.out.println("You sunk the opponent's destroyer!");
                 destroyerSunk = true;
             }
+            System.out.print(ANSI_RESET);
+
+            Thread.sleep(2000);
 
             // AI Turn
 
             ai.aiTurn();
             defensiveBoard = ai.getAttackBoard();
+            System.out.println();
             System.out.println(defensiveBoard);
             System.out.println("Your opponent shot a " + ai.getDisplayResult() + " at " + ai.getDisplayCoord() + "!\n\n");
+
+            Thread.sleep(2000);
         }
 
-        if (checkCarrier || checkBattleship || checkCruiser || checkSubmarine || checkDestroyer)
-        {
-            System.out.println("You sunk all of your opponent's ships! You win!");
-        }
-        else if (ai.checkSinkStatus())
+        if (!(ai.checkSinkStatus()))
         {
             System.out.println("You lost! Your opponent sunk all of your ships!");
+        }
+        else
+        {
+            System.out.println("You sunk all of your opponent's ships! You win!");
         }
     }
 }
