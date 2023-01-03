@@ -1,3 +1,7 @@
+/**
+ * The BattleshipMaker class represents the board which the game "Battleship" is played on.
+ * It contains all the information associated with the game, including the coordinates and directions.
+ */
 public class BattleshipMaker {
     // Instance Variables
 
@@ -16,29 +20,65 @@ public class BattleshipMaker {
     private String destroyerDirect;
 
     // Constructors
-    /*
-    empty constructor to access methods
+
+    /**
+     * Constructor for the BattleshipMaker class. This creates a new instance of a BattleshipMaker
+     * and sets the instance variables to blank values.
+     * Intended for use with gradual addition of information via methods.
      */
     public BattleshipMaker()
-    {}
+    {
+        carrierCoord = "";
+        battleshipCoord = "";
+        cruiserCoord = "";
+        submarineCoord = "";
+        destroyerCoord = "";
 
-    /*
-    creation of an object of this class that assigns the ship coordinates
-    to specific coordinates determined by the parameters
+        carrierDirect = "";
+        battleshipDirect = "";
+        cruiserDirect = "";
+        submarineDirect = "";
+        destroyerDirect = "";
+    }
+
+    /**
+     * Constructor for the BattleshipMaker class. This creates a new instance of a BattleshipMaker
+     * and sets the instance variables specific coordinates and directions determined by the parameters.
+     *
+     * @param coord1 represents the coordinate point (in letter-number format) of the carrier ship
+     * @param coord2 represents the coordinate point (in letter-number format) of the battleship
+     * @param coord3 represents the coordinate point (in letter-number format) of the cruiser ship
+     * @param coord4 represents the coordinate point (in letter-number format) of the submarine ship
+     * @param coord5 represents the coordinate point (in letter-number format) of the destroyer ship
+     * @param directCarrier represents the direction (down or right) of the carrier ship
+     * @param directBattle represents the direction (down or right) of the battleship
+     * @param directCruiser represents the direction (down or right) of the cruiser ship
+     * @param directSub represents the direction (down or right) of the submarine ship
+     * @param directDestroy represents the direction (down or right) of the destroyer ship
      */
-    public BattleshipMaker(String coord1, String coord2, String coord3, String coord4, String coord5)
+    public BattleshipMaker(String coord1, String coord2, String coord3, String coord4, String coord5, String directCarrier, String directBattle, String directCruiser, String directSub, String directDestroy)
     {
         carrierCoord = coord1;
         battleshipCoord = coord2;
         cruiserCoord = coord3;
         submarineCoord = coord4;
         destroyerCoord = coord5;
+
+        carrierDirect = directCarrier;
+        battleshipDirect = directBattle;
+        cruiserDirect = directCruiser;
+        submarineDirect = directSub;
+        destroyerDirect = directDestroy;
     }
 
     // Methods
 
-    /*
-    getter based on ship and coord/direction
+    /**
+     * The getInfo method will access the information in the parameter-specified instance variable.
+     *
+     * @param ship represents the type of ship that is desired to be accessed
+     * @param infoType represents the type of information that is desired to be accessed (coord or direction)
+     * @return returns a String which the specified instance variable contains
      */
     public String getInfo(String ship, String infoType)
     {
@@ -126,17 +166,17 @@ public class BattleshipMaker {
     that includes all the ships, represented by "o"
     utilizes addShip method
      */
-    public String setDefensiveBoard(String directCarrier, String directBattle, String directCruiser, String directSub, String directDestroy)
+    public String setDefensiveBoard()
     {
         String emptyBoard = makeEmptyBoard();
         String updateBoard = "";
 
         // initialize an empty board and add to it ship by ship
-        updateBoard = addShip(emptyBoard,5,carrierCoord,directCarrier);
-        updateBoard = addShip(updateBoard,4,battleshipCoord,directBattle);
-        updateBoard = addShip(updateBoard,3,cruiserCoord,directCruiser);
-        updateBoard = addShip(updateBoard,3,submarineCoord,directSub);
-        updateBoard = addShip(updateBoard,2,destroyerCoord,directDestroy);
+        updateBoard = addShip(emptyBoard,5,carrierCoord,carrierDirect);
+        updateBoard = addShip(updateBoard,4,battleshipCoord,battleshipDirect);
+        updateBoard = addShip(updateBoard,3,cruiserCoord,cruiserDirect);
+        updateBoard = addShip(updateBoard,3,submarineCoord,submarineDirect);
+        updateBoard = addShip(updateBoard,2,destroyerCoord,destroyerDirect);
 
         return updateBoard;
     }

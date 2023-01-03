@@ -256,8 +256,8 @@ public class BattleshipPlayer {
         System.out.println("\nYou successfully added your destroyer:\n" + setupBoard);
 
         // Create Objects
-        BattleshipMaker play = new BattleshipMaker(carrierCoord,battleshipCoord,cruiserCoord,submarineCoord,destroyerCoord);
-        defensiveBoard = play.setDefensiveBoard(carrierDirect,battleshipDirect,cruiserDirect,submarineDirect,destroyerDirect);
+        BattleshipMaker play = new BattleshipMaker(carrierCoord,battleshipCoord,cruiserCoord,submarineCoord,destroyerCoord,carrierDirect,battleshipDirect,cruiserDirect,submarineDirect,destroyerDirect);
+        defensiveBoard = play.setDefensiveBoard();
 
         AI ai = new AI(defensiveBoard,carrierCoord,battleshipCoord,cruiserCoord,submarineCoord,destroyerCoord,carrierDirect,battleshipDirect,cruiserDirect,submarineDirect,destroyerDirect);
 
