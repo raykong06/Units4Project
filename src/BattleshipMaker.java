@@ -74,11 +74,11 @@ public class BattleshipMaker {
     // Methods
 
     /**
-     * The getInfo method will access the information in the parameter-specified instance variable.
+     * The getInfo method will return the information in the parameter-specified instance variable.
      *
      * @param ship represents the type of ship that is desired to be accessed
      * @param infoType represents the type of information that is desired to be accessed (coord or direction)
-     * @return returns a String which the specified instance variable contains
+     * @return returns the String which the specified instance variable contains
      */
     public String getInfo(String ship, String infoType)
     {
@@ -130,8 +130,11 @@ public class BattleshipMaker {
         }
     }
 
-    /*
-    creates an empty gridded string (A-J, 1-10)
+    /**
+     * the makeEmptyBoard method will return a String which represents an empty battleship board.
+     *
+     * @return returns a String that contains a gridded board that aligns with numbers 1-10
+     * and letters A-J. Coordinates are represented in the String by "+" signs.
      */
     public String makeEmptyBoard()
     {
@@ -161,10 +164,12 @@ public class BattleshipMaker {
         return emptyBoard;
     }
 
-    /*
-    creates a string with the defensive (user) gridded board
-    that includes all the ships, represented by "o"
-    utilizes addShip method
+    /**
+     * The setDefensiveBoard method returns a String with the defensive (user) gridded board
+     * that includes all the ships, represented by "o" signs. The method utilizes the existing
+     * coordinates and directions in the instance variables.
+     *
+     * @return returns a String that represents a full defensive board with all ships placed.
      */
     public String setDefensiveBoard()
     {
