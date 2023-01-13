@@ -23,7 +23,7 @@ public class BattleshipMaker {
 
     /**
      * Constructor for the BattleshipMaker class. This creates a new instance of a BattleshipMaker
-     * and sets the instance variables to blank values.
+     * and sets the instance variables to empty String values.
      * Intended for use with gradual addition of information via methods.
      */
     public BattleshipMaker()
@@ -166,10 +166,10 @@ public class BattleshipMaker {
 
     /**
      * The setDefensiveBoard method returns a String with the defensive (user) gridded board
-     * that includes all the ships, represented by "o" signs. The method utilizes the existing
+     * that includes all 5 of the ships, represented by "o" signs. The method utilizes the existing
      * coordinates and directions in the instance variables.
      *
-     * @return returns a String that represents a full defensive board with all ships placed.
+     * @return returns a String that represents a full defensive board with all ships positioned.
      */
     public String setDefensiveBoard()
     {
@@ -186,12 +186,16 @@ public class BattleshipMaker {
         return updateBoard;
     }
 
-    /*
-    takes a base board, adds a type of ship to it, depending on
-    ship type and the direction to which the ship goes
-
-    take the first half of the board String, add the ship,
-    then add the rest of the board
+    /**
+     * The addShip method takes an inputted board as a base to add a ship
+     * by replacing the "+" signs with "o" signs at the indicated coordinate,
+     * direction, and for the indicated ship length.
+     *
+     * @param baseBoard represents the board for which the ship will be added onto
+     * @param shipLength represents the length of units that the added ship will be
+     * @param coord represents the coordinate which the added ship will start at
+     * @param direction represents the orientation which the added ship will face toward
+     * @return returns a String that represents the original board inputted with an added ship as described.
      */
     public String addShip(String baseBoard, int shipLength, String coord, String direction)
     {
@@ -209,9 +213,9 @@ public class BattleshipMaker {
             }
             updateBoard = updateBoard + baseBoard.substring(behind + shipLength * 2);
         }
-        /* if ship goes down, add a single ship marker,
-        add the board space between, until ship length is met, then add back half of board
-         */
+       /* if ship goes down, add a single ship marker,
+       add the board space between, until ship length is met, then add back half of board
+        */
         else
         {
             int inBetween = behind;
@@ -235,9 +239,16 @@ public class BattleshipMaker {
         return updateBoard;
     }
 
-    /*
-    checks if the ship will fit in the parameters of the board
-    true if yes, false if no
+    /**
+     * The limitChecker method checks if a specified ship would fit in
+     * the parameters of the board. If it would fit, return true, otherwise
+     * the ship would not fit and the method will return false.
+     *
+     * @param shipLength represents the length in units that the tested ship is
+     * @param coord represents the coordinate which the tested ship starts at
+     * @param direction represents the orientation of the tested ship
+     * @return returns true if the hypothetical ship would fit within the parameters of the board,
+     * otherwise returns false if it cannot.
      */
     public boolean limitChecker(int shipLength, String coord, String direction)
     {
@@ -260,9 +271,13 @@ public class BattleshipMaker {
         return false;
     }
 
-    /*
-    checks if the coordinate is a valid coordinate to be used
-    true if yes, false if no
+    /**
+     * The coordChecker method checks if the provided String is a valid coordinate,
+     * in that the letter is the range of A-J and that the number is between 1-10 inclusive.
+     * The coordinate will be checked for proper formatting as well.
+     *
+     * @param coord represents the coordinate point to be checked
+     * @return returns true if the String is a valid coordinate, otherwise returns false.
      */
     public boolean coordChecker(String coord)
     {
@@ -317,9 +332,18 @@ public class BattleshipMaker {
         return false;
     }
 
-    /*
-    checks if the ship coordinates overlap
-    uses the baseboard and checks if each space the ship is to be placed already has a "o" positioned
+    /**
+     * The overlapChecker method checks if a hypothetically placed ship would
+     * overlap with existing ships upon the provided board. This method checks
+     * if each space the ship is to be placed already has an "o" positioned on
+     * the original board.
+     *
+     * @param baseBoard represents the board which the ship overlap is to be tested upon
+     * @param shipLength represents the units of length of the ship that is tested
+     * @param coord represents the coordinate which the tested ship starts upon
+     * @param direction represents the orientation of the tested ship
+     * @return returns true if no overlap is detected, otherwise returns false,
+     * indicating that overlap would occur.
      */
     public boolean overlapChecker(String baseBoard, int shipLength, String coord, String direction)
     {
@@ -355,9 +379,12 @@ public class BattleshipMaker {
         }
     }
 
-    /*
-    creates a board with a randomized set of ships
-    sets the ship coords and ship directions
+    /**
+     * The randomBoard method creates a String that represents a board with a randomized
+     * set of ships. The respective instance variables for ship coordinates and ship
+     * directions are updated to reflect their random positions.
+     *
+     * @return returns a String that represents a board with a randomized set of ships.
      */
     public String randomBoard()
     {
@@ -398,9 +425,17 @@ public class BattleshipMaker {
         return randomBoard;
     }
 
-    /*
-    adds a ship of the specified length to the given base board
-    the coordinate and direction of the ship is randomized
+    /**
+     * The addRandomShip method adds a ship of the specified length to the provided
+     * board. The coordinate position and orientation of this added ship is randomized.
+     * At the end of the String that the method returns, after the board, the
+     * coordinate and orientation of the added ship are appended with a space separating them.
+     *
+     * @param baseBoard represents the board which the ship is added to
+     * @param shipLength represents the units of length of the added ship
+     * @return returns a String that represents the provided board inputted with an added ship
+     * of the specified length with a randomized coordinate and a randomized orientation,
+     * with that coordinate and orientation appended to the end of the String.
      */
     public String addRandomShip(String baseBoard, int shipLength)
     {
@@ -437,6 +472,13 @@ public class BattleshipMaker {
         return baseBoard;
     }
 
+    /**
+     * The randomCoord method generates a random valid coordinate String with the letter
+     * being between A-J and the number being between 1-10.
+     *
+     * @return returns a String that represents a randomly generated valid coordinate point
+     * within the board parameters.
+     */
     public String randomCoord()
     {
         String coord = "";
@@ -449,10 +491,20 @@ public class BattleshipMaker {
         return coord;
     }
 
-    /*
-    places a marker "x" on the provided board if the existing area is "+" (miss)
-    places a marker "#" on the provided board if the existing area is "o" (hit)
-    returns a statement saying that the area has already been shot if above markers are already present
+    /**
+     * The takeShot method uses the provided board in the parameter and simulates a shot
+     * taken at the parameter-provided coordinate point. The method will replace a marker
+     * "x" on the provided board if the existing area is "+" (representing a miss), and
+     * will replace a marker "#" on the provided board if the existing area is "o" (representing
+     * a hit). The method will return a String of the provided board with the respective replaced
+     * markers if either of these conditions solve true, however if they do not, the method will
+     * return a String stating that a shot has already been taken at the coordinate described.
+     *
+     * @param baseBoard represents the board for which the shot will be tested then altered to simulate a shot
+     * @param coord represents the coordinate point for which the shot is attempted to be taken at
+     * @return returns a String that represents the board with a shot taken at the coordinate if the existing
+     * marker at the coordinate is a "+" or an "o", otherwise returns a String stating that a shot has already
+     * been taken at the coordinate specified.
      */
     public String takeShot(String baseBoard, String coord)
     {
@@ -475,19 +527,39 @@ public class BattleshipMaker {
         return updateBoard;
     }
 
+    /**
+     * The hitMarker method places a hit marker, represented by "#", at the coordinate specified in the
+     * parameter and on the board provided in the parameter. The hit marker will replace whatever
+     * symbol is currently existing at the coordinate specified.
+     *
+     * @param baseBoard represents the board for which the hit marker will be placed
+     * @param coord represents the coordinate point for which the existing symbol will be replaced with a hit marker
+     * @return returns a String representing the board provided in the parameter with a hit marker "#" placed
+     * at the coordinate specified.
+     */
     public String hitMarker(String baseBoard, String coord)
     {
         String updateBoard = "";
         int behind = baseBoard.indexOf(coord.substring(1)) + 1 + (LETTERS.indexOf(coord.substring(0,1)) + 1) * 2;
         String target = baseBoard.substring(behind, behind + 1);
 
-            updateBoard = baseBoard.substring(0,behind) + "#" + baseBoard.substring(behind + 1);
+        updateBoard = baseBoard.substring(0,behind) + "#" + baseBoard.substring(behind + 1);
 
         return updateBoard;
     }
 
-    /*
-    returns "hit" or "miss" depending on the substring at the target index
+    /**
+     * The checkHit method will return "hit" or "miss" depending on the symbol that exists at
+     * the coordinate point provided in the parameter. If the symbol at the coordinate point
+     * is a "+", "x", or an "o", the method will return "miss" since they indicate a shot has
+     * yet to be taken at the specified coordinate or the shot taken was a miss. Otherwise, if
+     * none of those symbols are apparent, presumably signifying the symbol present is a "#",
+     * then "hit" will be returned, since "#" represents a hit.
+     *
+     * @param baseBoard represents the board for which the hit marker is checked for
+     * @param coord represents the coordinate point on the board for which the hit marker is checked for
+     * @return returns a String stating "miss" if the existing symbol at the coordinate point is
+     * a "+", "x", or an "o", otherwise returns a String stating "hit".
      */
     public String checkHit(String baseBoard, String coord)
     {
@@ -506,9 +578,17 @@ public class BattleshipMaker {
         return result;
     }
 
-    /*
-    checks if a ship is up and alive
-    returns true if up, false if down
+    /**
+     * The checkShipStatus method checks if a specified ship is up and "alive" on the provided board.
+     * The ship is considered down if the entire contents of that ship is composed of "#" .Returns true
+     * if the specified ship is up, otherwise returns false.
+     *
+     * @param baseBoard represents the board for which the specified ship's status is checked for
+     * @param shipLength represents the units of length of the specified ship
+     * @param coord represents the coordinate point for which the specified ship starts upon
+     * @param direction represents the orientation of the specified ship
+     * @return returns false if the specified ship is entirely composed of "#" symbols, meaning
+     * the ship is shot down, otherwise returns true, meaning the ship is still up.
      */
     public boolean checkShipStatus(String baseBoard, int shipLength, String coord, String direction)
     {
@@ -559,7 +639,12 @@ public class BattleshipMaker {
         }
     }
 
-
+    /**
+     * toString method for the BattleshipMaker class. This method will return a String showing
+     * the instructions on how to play the Battleship game.
+     *
+     * @return returns a String showing instructions on how to play the Battleship game and what the symbols mean.
+     */
     public String toString()
     {
         String info = "Object of the game: Be the first to sink all 5 of the opponent's ships. You are playing against the program AI.\n" +

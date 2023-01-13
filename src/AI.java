@@ -1,3 +1,8 @@
+/**
+ * The AI class represents the programmed opponent which the user plays against.
+ * It contains all the information associated with the user's board, such as
+ * ships and coordinates, as well as the methods to take simulate turns.
+ */
 public class AI {
 
     private String attackBoard;
@@ -29,6 +34,23 @@ public class AI {
 
     BattleshipMaker ai = new BattleshipMaker();
 
+    /**
+     * Constructor for the AI class. This creates a new instance of an AI, and assigns the information provided
+     * by the parameters to the instance variables. The information passed through the parameters represents
+     * the information about the user's board.
+     *
+     * @param attackBoard represents the user's board, with all ships filled in.
+     * @param carrierCoord represents the coordinate point (in letter-number format) of the user's carrier ship
+     * @param battleshipCoord represents the coordinate point (in letter-number format) of the user's battleship
+     * @param cruiserCoord represents the coordinate point (in letter-number format) of the user's cruiser ship
+     * @param submarineCoord represents the coordinate point (in letter-number format) of the user's submarine
+     * @param destroyerCoord represents the coordinate point (in letter-number format) of the user's destroyer ship
+     * @param carrierDirect represents the direction (down or right) of the user's carrier ship
+     * @param battleshipDirect represents the direction (down or right) of the user's battleship
+     * @param cruiserDirect represents the direction (down or right) of the user's cruiser ship
+     * @param submarineDirect represents the direction (down or right) of the user's submarine
+     * @param destroyerDirect represents the direction (down or right) of the user's destroyer ship
+     */
     public AI(String attackBoard, String carrierCoord, String battleshipCoord, String cruiserCoord, String submarineCoord, String destroyerCoord, String carrierDirect, String battleshipDirect, String cruiserDirect, String submarineDirect, String destroyerDirect)
     {
         this.attackBoard = attackBoard;
@@ -53,6 +75,11 @@ public class AI {
         change = "ttttt";
     }
 
+    /**
+     * The aiTurn method will simulate a turn and shot by the AI opponent. The results from the turn will implicate
+     * the decisions that will be made for subsequent turns. For example, if the shot was a hit, subsequent turns
+     * will take shots in the general vicinity until the ship gets taken down.
+     */
     public void aiTurn()
     {
         boolean successfulShot = false;
@@ -86,8 +113,8 @@ public class AI {
             while (!successfulShot)
             {
                 if (((LETTERS.indexOf(successfulCoord.substring(0,1)) - 1 == -1) && direction == 1) ||
-                ((Integer.parseInt(successfulCoord.substring(1)) + 1 == 11) && direction == 2) ||
-                ((LETTERS.indexOf(successfulCoord.substring(0,1)) + 1 == 10) && direction == 3))
+                        ((Integer.parseInt(successfulCoord.substring(1)) + 1 == 11) && direction == 2) ||
+                        ((LETTERS.indexOf(successfulCoord.substring(0,1)) + 1 == 10) && direction == 3))
                 {
                     direction++;
                 }
@@ -166,6 +193,12 @@ public class AI {
             {
                 continueCoord = coord;
                 continueShot = true;
+                if (((LETTERS.indexOf(continueCoord.substring(0, 1)) - 1 == -1) && direction == 1) ||
+                        ((Integer.parseInt(continueCoord.substring(1)) + 1 == 11) && direction == 2) ||
+                        ((LETTERS.indexOf(continueCoord.substring(0, 1)) + 1 == 10) && direction == 3))
+                {
+                    continueShot = false;
+                }
             }
             else
             {
@@ -198,11 +231,23 @@ public class AI {
         displayCoord = coord;
     }
 
+    /**
+     * The getAttackBoard method is an accessor method to return the attackBoard instance variable.
+     * The attackBoard represents the board which the AI is attacking on.
+     *
+     * @return returns the attackBoard instance variable, representing the board which the AI attacks.
+     */
     public String getAttackBoard()
     {
         return attackBoard;
     }
 
+    /**
+     * The checkSinkStatus method checks whether the AI has taken down all the user's ships.
+     * If all the ships are downed, the method returns false. Otherwise, the method returns true.
+     *
+     * @return returns false if all the user's ships are downed, otherwise returns true.
+     */
     public boolean checkSinkStatus()
     {
         String checkChange;
@@ -236,11 +281,23 @@ public class AI {
         return sinkStatus;
     }
 
+    /**
+     * The getDisplayResult method is an accessor method which returns the displayResult instance variable.
+     * The displayResult instance variable represents the result of the most recent AI turn.
+     *
+     * @return returns the displayResult instance variable, which represents the result of the most recent AI turn.
+     */
     public String getDisplayResult()
     {
         return displayResult;
     }
 
+    /**
+     * The getDisplayCoord method is an accessor method which returns the displayCoord instance variable.
+     * THe displayCoord instance variable represents the coordinate of the most recent shot.
+     *
+     * @return returns the displayCoord instance variable, which represents the coordinate of the most recent shot.
+     */
     public String getDisplayCoord()
     {
         return displayCoord;

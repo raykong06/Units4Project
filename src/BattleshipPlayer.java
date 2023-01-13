@@ -7,6 +7,7 @@ public class BattleshipPlayer {
         String input = "";
 
         final String ANSI_RED = "\u001B[31m";
+        final String ANSI_GREEN = "\u001B[32m";
         final String ANSI_RESET = "\u001B[0m";
 
         String carrierCoord = "";
@@ -281,8 +282,8 @@ public class BattleshipPlayer {
 
             while (opponent.takeShot(opponentBoard,input).equals("A shot has already been taken at " + input + ". Please take another shot."))
             {
-                    System.out.print(opponent.takeShot(attackBoard,input) + "\nTake another shot: ");
-                    input = s.nextLine();
+                System.out.print(opponent.takeShot(attackBoard,input) + "\nTake another shot: ");
+                input = s.nextLine();
             }
 
             opponentBoard = opponent.takeShot(opponentBoard,input);
@@ -346,11 +347,15 @@ public class BattleshipPlayer {
 
         if (!(ai.checkSinkStatus()))
         {
+            System.out.print(ANSI_RED);
             System.out.println("You lost! Your opponent sunk all of your ships!");
+            System.out.print(ANSI_RESET);
         }
         else
         {
+            System.out.print(ANSI_GREEN);
             System.out.println("You sunk all of your opponent's ships! You win!");
+            System.out.print(ANSI_RESET);
         }
     }
 }
